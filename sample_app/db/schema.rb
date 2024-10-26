@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_26_075029) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_26_080144) do
   create_table "authors", force: :cascade do |t|
     t.string "name"
     t.integer "paper_id", null: false
@@ -43,6 +43,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_075029) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["community_id"], name: "index_keywords_on_community_id"
+  end
+
+  create_table "message_communities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "papers", force: :cascade do |t|
