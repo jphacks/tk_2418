@@ -95,6 +95,22 @@ RuboCop によるコード整形、Ruby 公式デバッガーなどの拡張機�
   <p>Safari では問題なくことが多いです。ただし、文字入力をしてから、Codespaces 上の画面に表示されるまでが遅い場合があります。また一部のアイコンが表示されない現象も確認できています。開発する上で問題になるわけではないですが、もし気になる場合は Google Chrome など他のブラウザをお試しください。</p>
   <img src='https://i.gyazo.com/a74db22c2faba07a44af284a08f1f21b.png' alt='Safari のエラー例１' />
 </details>
+##usage
+<details>
+<summary>
+  <h3>rails serverで起動できないとき</h3>
+  <h3>railsが入っていない場合</h3>
+<p>echo "gem: --no-document" >> ~/.gemrc</p>
+<p>gem install rails -v 7.0.4.3</p>
+<p>gem install bundler -v 2.5.6</p>
+<h3>rubyが入っていない場合</h3>
+<p>rvm install ruby-3.2.5</p>
+  <h3>たまに，nokogiriなどのライブラリ関連でエラーを吐いた時</h3>
+<p>rvm reinstall ruby-3.2.5</p>
+<h3>データテーブルが見つからないなどのマイグレーション関連のエラーを吐いた時</h3>
+  <p>rails db:migrate</p>
+</summary>
+</details>
 
 <br><br>
 
