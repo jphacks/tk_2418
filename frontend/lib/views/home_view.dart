@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,10 +21,26 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  // final int _selectedLength = 10;
+  final List<bool> _selected = List.generate(10, (index) => false);
+
+  /*
+  @override
+  void initState(){
+    super.initState();
+      _selected = List.generate(_selectedLength, (index) => false);
+  }
+  */
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  void _toggleButton(int index) {
+    setState(() {
+      _selected[index] = !_selected[index];
     });
   }
 
@@ -38,71 +53,48 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          // タグ選択部分
-
-          // Container(
-          //   padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          //   child: Row(
-          //     children: [
-          //       ElevatedButton(
-          //         onPressed: () {},
-          //         child: Text('機械学習'),
-          //         style: ElevatedButton.styleFrom(
-          //           // primary: Colors.lightBlueAccent, // ボタンの背景色
-          //         ),
-          //       ),
-          //       SizedBox(width: 10),
-          //       OutlinedButton(
-          //         onPressed: () {},
-          //         child: Text('連合学習'),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-
-
-
 
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-            // height: 60,
-            // child: ListView(
-                // scrollDirection: Axis.horizontal,
-                // children: List.generate(10, (index) {
+              children: [
 
-                  // return
-
-                    // GestureDetector(
-                    // onTap: () {},
-                    // child: Container(
-                    //   padding:EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    //   decoration: BoxDecoration(
-                    //     border: Border.all(color: Colors.black, width: 2),
-                    //     // borderRadius: BorderRadius.circular(8.0),
-                    //   ),
-                    //   child: Center(
-                    //     child: Text(
-                    //       'Item $index'
-                    //       ,style: const TextStyle(fontSize: 15),
-                    //     ),
-                    //   ),
-                    // ),
-                    // )
-              children: List.generate(50, (index) {
-                return Padding(
+                Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // ボタンが押された時の処理
-                      print('Button $index pressed');
-                    },
-                    child: Text('Button $index'),
+                  child: IconButton(
+                      onPressed: (){},
+                      icon: const Icon(
+                        Icons.add,
+                        size: 30,
+                        color: Colors.blue,
+                      )
                   ),
-                );
-              }),
+                ),
+
+                Row(
+                  children: List.generate(10, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () =>
+                        // ボタンが押された時の処理
+                        // print('Button $index pressed'),
+                        _toggleButton(index),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _selected[index] ? Colors.green : null,
+                        ),
+                        child: Text('Button $index'),
+                      ),
+                    );
+                  }),
                   // ;
+                ),
+
+
+
+              ],
             ),
+
           ),
 
 
@@ -136,19 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-
-        // height: 100,
-        // child: ListView(
-        //     scrollDirection: Axis.horizontal,
-        //     children: List.generate(10, (index) {
-        //       return Container(
-        //         width: 100,
-        //         height: 100,
-        //         color: Colors.blue[(index % 9 + 1) * 100],
-        //         child: Center(child: Text("Item $index"),),
-        //       );
-        //     })
-        // ),
 
       // ボトムナビゲーションバー
       bottomNavigationBar: BottomNavigationBar(
