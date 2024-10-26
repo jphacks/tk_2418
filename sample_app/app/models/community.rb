@@ -3,5 +3,6 @@ class Community < ApplicationRecord
     has_many :users, through: :user_communities
     has_many :message_communities, dependent: :destroy
     
-    has_many :keywords
+    serialize :keywords,Array
+    validates :keywords,presence: true
 end
