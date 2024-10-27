@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'community_view.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -226,31 +228,41 @@ class _HomeScreenState extends State<HomeScreen> {
 class TalkTopicWidget extends StatelessWidget {
   final String title;
   final int views;
+  //
 
   TalkTopicWidget({required this.title, required this.views});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title),
-          CircleAvatar(
-            radius: 15,
-            backgroundColor: Colors.red,
-            child: Text(
-              views.toString(),
-              style: TextStyle(color: Colors.white, fontSize: 12),
-            ),
+        onTap: () {
+          MaterialPageRoute(builder: (context) => const CommunityView());
+        },
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          margin: EdgeInsets.symmetric(vertical: 8.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(8.0),
           ),
-        ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(title),
+              CircleAvatar(
+                radius: 15,
+                backgroundColor: Colors.red,
+                child: Text(
+                  views.toString(),
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
