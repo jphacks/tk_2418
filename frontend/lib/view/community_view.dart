@@ -10,7 +10,7 @@ class CommunityView extends StatefulWidget {
 }
 class _CommunityViewState extends State<CommunityView> {
   final TextEditingController messageController = TextEditingController();
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   final List<bool> _selected = List.generate(10, (index) => false);
   final List<String> _items = [
     "機械学習",

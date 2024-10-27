@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ExpansionTile(
                 title: const Text("トーク"),
                 children: _items.map((item) {
-                  return TalkTopicWidget(title: item, views: 15);
+                  return TalkTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
                 }).toList(),
               ),
             ),
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ExpansionTile(
                 title: const Text("HOT"),
                 children: _items.map((item) {
-                  return HotTopicWidget(title: item, views: 15);
+                  return HotTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
                 }).toList(),
               ),
             ),
