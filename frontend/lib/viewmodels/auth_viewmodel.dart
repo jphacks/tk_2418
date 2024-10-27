@@ -27,7 +27,7 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   // ログイン処理
-  Future<void> login(String id, String email, String name) async {
+  Future<void> login(String id, String name, String email) async {
     bool success = await _userRepository.login(id, name, email);
     if (success) {
       await fetchUser(id); // ログイン成功後、ユーザーデータを取得

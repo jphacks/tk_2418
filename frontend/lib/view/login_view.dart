@@ -48,7 +48,7 @@ class AuthView extends StatelessWidget {
                     final name = nameController.text.trim();
                     final id = idController.text.trim();
                     if (email.isNotEmpty && name.isNotEmpty && id.isNotEmpty) {
-                      authViewModel.login(email, name, id);
+                      authViewModel.login(id, name, email);
                       print(authViewModel.isLoggedIn);
                       if (authViewModel.isLoggedIn) {
                         // ログインが成功したらCommunityViewに遷移
