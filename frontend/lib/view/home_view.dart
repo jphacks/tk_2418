@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   int _currentIndex = 0;
   final List<bool> _selected = List.generate(10, (index) => false);
-  final PageController _pageController = PageController();
   final List<String> _items = [
     "機械学習",
     "連合学習",
@@ -51,6 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void _toggleButton(int index) {
     setState(() {
       _selected[index] = !_selected[index];
+    });
+  }
+
+  void _navigateToCommunityView() {
+    setState(() {
+      _selectedIndex = 1;
     });
   }
 
@@ -105,6 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             // ボタンが押された時の処理
                             onPressed: () => _toggleButton(index),
+                            //onPressed: () => _onItemTapped(index),
 
                             // チェックを入れる
                             child: Row(
@@ -132,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ExpansionTile(
                   title: const Text("トーク"),
                   children: _items.map((item) {
-                    return TalkTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
+                    return TalkTopicWidget(title: item, views: 15, homeViewModel: homeViewModel, navigate: _navigateToCommunityView);
                   }).toList(),
                 ),
               ),
@@ -185,9 +191,13 @@ class TalkTopicWidget extends StatelessWidget {
   final String title;
   final int views;
   final HomeViewModel homeViewModel;
-  //
+  final VoidCallback navigate;
 
-  TalkTopicWidget({required this.title, required this.views, required this.homeViewModel});
+  TalkTopicWidget({
+    required this.title,
+    required this.views,
+    required this.homeViewModel,
+    required this.navigate});
 
   @override
   Widget build(BuildContext context) {
@@ -196,8 +206,8 @@ class TalkTopicWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
         onTap: () {
-          homeViewModel.navigateToCommunityView(context);
-
+          navigate();
+          //homeViewModel.navigateToCommunityView(context);
         },
         child: Container(
           padding: EdgeInsets.all(16.0),
