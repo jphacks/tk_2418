@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ExpansionTile(
                   title: const Text("HOT"),
                   children: _items.map((item) {
-                    return HotTopicWidget(title: item, views: 15, homeViewModel: homeViewModel, navigate: _navigateToPapersView);
+                    return HotTopicWidget(title: item, views: 12, homeViewModel: homeViewModel, navigate: _navigateToPapersView);
                   }).toList(),
                 ),
               ),
