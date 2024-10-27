@@ -2,7 +2,7 @@ class UserModel {
   final String id;
   final String name;
   final String email;
-  List<String> keywords = [];
+  List<String> currentKeywords = [];
 
   UserModel({
     required this.id,
@@ -26,7 +26,7 @@ class UserModel {
     };
   }
 
-  void addKeyword(String keyword) {
-    keywords.add(keyword);
+  void changeKeyWords(List<String> keywords) {
+    currentKeywords = keywords;
   }
 }

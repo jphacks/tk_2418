@@ -17,29 +17,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => HomeViewModel()),
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
-        ChangeNotifierProvider(create: (_) => CommunityViewModel()),
+        ChangeNotifierProxyProvider<AuthViewModel, HomeViewModel>(
+          create: (context) => HomeViewModel(authViewModel: Provider.of<AuthViewModel>(context, listen: false)),
+          update: (context, authViewModel, previousHomeViewModel) => HomeViewModel(authViewModel: authViewModel),
+        ),
+        ChangeNotifierProxyProvider<AuthViewModel, CommunityViewModel>(
+            create: (context) => CommunityViewModel(authViewModel: Provider.of<AuthViewModel>(context, listen: false)),
+            update: (context, authViewModel, previousCommunityViewModel) => CommunityViewModel(authViewModel: authViewModel),
+        ),
       ],
-      child: MaterialApp(
-        title: 'Login Example',
-        initialRoute: '/',
-        routes: {
-          '/': (context) => HomeScreen(),      // ホーム画面のルート
-          '/community': (context) => CommunityView(), // コミュニティ画面のルート
-          '/login': (context) => AuthView(),    // ログイン画面のルート
-          '/signup': (context) => SignUpView(), // サインアップ画面のルート
+      child: Consumer<AuthViewModel>(
+        builder: (context, authViewModel, child) {
+          return MaterialApp(
+            title: 'Login Example',
+            initialRoute: authViewModel.isLoggedIn ? '/login' : '/login',  // ログイン状態による初期画面の動的変更
+            routes: {
+              '/': (context) => HomeScreen(),       // ホーム画面のルート
+              '/community': (context) => CommunityView(), // コミュニティ画面のルート
+              '/login': (context) => AuthView(),    // ログイン画面のルート
+              '/signup': (context) => SignUpView(), // サインアップ画面のルート
+            },
+          );
         },
       ),
     );
-  }
-}
-
-class AuthCheck extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewModel>(context);
-    // ログイン状態に応じて、ホーム画面かログイン画面に遷移
-    return authViewModel.isLoggedIn ? HomeScreen() : AuthView();
   }
 }

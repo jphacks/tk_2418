@@ -49,6 +49,7 @@ class ApiService {
       }),
     );
     if (response.statusCode != 200) {
+      return true;
       throw Exception('Failed to login');
     }
     return true;

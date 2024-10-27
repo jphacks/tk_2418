@@ -23,34 +23,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-  // final int _selectedLength = 10;
-  final List<bool> _selected = List.generate(10, (index) => false);
-  final List<String> _items = [
-    "機械学習",
-    "連合学習",
-    "LiDAR",
-    "P2P",
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void initState() {
+    super.initState();
+    final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
+    homeViewModel.initializeSelected();  // 初期化は一度だけ
   }
-
-  void _toggleButton(int index) {
-    setState(() {
-      _selected[index] = !_selected[index];
-
-      // if (_selected[index]) {
-      //   TalkTopicWidget(title: _items[index], views: 15);
-      //
-      // }
-    });
-  }
-
-  int currentNumber = 0;
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
@@ -79,12 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   Row(
-                    children: List.generate(_items.length, (index) {
+                    children: List.generate(homeViewModel.items.length, (index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: _selected[index] ? Colors.green : null,
+                            backgroundColor: homeViewModel.selected[index] ? Colors.green : null,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
@@ -92,17 +69,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
 
                           // ボタンが押された時の処理
-                          onPressed: () => _toggleButton(index),
+                          onPressed: () => homeViewModel.toggleButton(index),
 
                           // チェックを入れる
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              if (_selected[index]) ...[
+                              if (homeViewModel.selected[index]) ...[
                                 // const SizedBox(width: 8.0),
                                 const Icon(Icons.check),
                               ],
-                              Text(_items[index]),
+                              Text(homeViewModel.items[index]),
                             ],
                           ),
 
@@ -119,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(16.0),
               child: ExpansionTile(
                 title: const Text("トーク"),
-                children: _items.map((item) {
+                children: homeViewModel.items.map((item) {
                   return TalkTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
                 }).toList(),
               ),
@@ -133,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.all(16.0),
               child: ExpansionTile(
                 title: const Text("HOT"),
-                children: _items.map((item) {
+                children: homeViewModel.items.map((item) {
                   return HotTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
                 }).toList(),
               ),
@@ -144,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // ボトムナビゲーションバー
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
+        currentIndex: homeViewModel.selectedIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'トーク'),
@@ -155,7 +132,6 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,
         onTap: (int index) {
-          _onItemTapped;
           if (index == 1) {
             homeViewModel.navigateToCommunityView(context);
           }
