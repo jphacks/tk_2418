@@ -51,8 +51,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_080144) do
   end
 
   create_table "messages", force: :cascade do |t|
+    t.text "content", null: false
+    t.integer "community_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["community_id"], name: "index_messages_on_community_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "papers", force: :cascade do |t|
@@ -90,6 +95,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_080144) do
 
   add_foreign_key "authors", "papers"
   add_foreign_key "keywords", "communities"
+  add_foreign_key "messages", "communities"
+  add_foreign_key "messages", "users"
   add_foreign_key "user_communities", "communities"
   add_foreign_key "user_communities", "users"
   add_foreign_key "user_papers", "papers"
