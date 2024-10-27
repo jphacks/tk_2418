@@ -40,15 +40,13 @@ class UsersController < ApplicationController
   # 新規ユーザ作成
   def create
     puts "Signup action called with params: #{params.inspect}"
-    # メールアドレスの重複確認
     if User.exists?(email: user_params[:email])
       render json: { error: 'Email has already been taken' }, status: :unprocessable_entity
       return
     end
-
+  
     user = User.new(user_params)
     if user.save
-      session[:user_id] = user.id
       render json: { message: 'Signup successful', user: user }, status: :created
     else
       render json: user.errors, status: :unprocessable_entity
