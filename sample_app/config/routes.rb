@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   # Users routes
+  # post '/api/users/signup', to: 'users#signup'            # User signup with auto-login
+  post '/api/users/login', to: 'users#login'              # User login
   get '/api/users', to: 'users#index'                     # Get all users
-  post '/api/users', to: 'users#create'                   # Create a new user (without login)
+  post '/api/users', to: 'users#create'                   # Create a new user
   get '/api/users/:id', to: 'users#show'                  # Get user by ID
   put '/api/users/:id', to: 'users#update'                # Update user by ID
   delete '/api/users/:id', to: 'users#destroy'            # Delete user by ID
-  post '/api/users/signup', to: 'users#signup'            # User signup with auto-login
-  post '/api/users/login', to: 'users#login'              # User login
 
   # Communities routes
   post '/api/communities', to: 'communities#create'                  # Create a new community
