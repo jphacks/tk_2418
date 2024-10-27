@@ -53,10 +53,7 @@ class AuthView extends StatelessWidget {
                       print(authViewModel.isLoggedIn);
                       if (authViewModel.isLoggedIn) {
                         // ログインが成功したらCommunityViewに遷移
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => CommunityView()),
-                        );
+                        authViewModel.navigateToHomeView(context);
                       } else {
                         // ログイン失敗時の処理
                         ScaffoldMessenger.of(context).showSnackBar(

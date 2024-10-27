@@ -55,4 +55,17 @@ class AuthViewModel extends ChangeNotifier {
     _user = null;
     notifyListeners();
   }
+
+  void changeKeywords(List<String> keywords) {
+    if(_user == null) {
+      notifyListeners();
+      return;
+    }
+    _user!.changeKeyWords(keywords);
+    notifyListeners();
+  }
+
+  void navigateToHomeView(BuildContext context) {
+    Navigator.pushReplacementNamed(context, '/');
+  }
 }

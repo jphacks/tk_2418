@@ -1,31 +1,106 @@
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart'; //ToDO: ここにViewModelを通して値の流し込みを行う
+import 'package:provider/provider.dart';
 
-// import '../viewmodels/talk_viewmodel.dart'; //ToDO: ここにViewModelを通して値の流し込みを行う
+import '../viewmodels/talk_viewmodel.dart';
 
 class CommunityView extends StatefulWidget {
-  const CommunityView({Key? key}) : super(key: key);
 
   @override
   _CommunityViewState createState() => _CommunityViewState();
 }
 class _CommunityViewState extends State<CommunityView> {
   final TextEditingController messageController = TextEditingController();
+  void initState() {
+    super.initState();
+    final communityViewModel = Provider.of<CommunityViewModel>(context, listen: false);
+    communityViewModel.initializeSelected();  // 初期化は一度だけ
+  }
+  // int _selectedIndex = 1;
+  // final List<bool> _selected = List.generate(10, (index) => false);
+  // final List<String> _items = [
+  //   "機械学習",
+  //   "連合学習",
+  //   "LiDAR",
+  //   "P2P",
+  // ];
+  //
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
+  //
+  // void _toggleButton(int index) {
+  //   setState(() {
+  //     _selected[index] = !_selected[index];
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // final communityViewModel = Provider.of<CommunityViewModel>(context);//ToDO: ここにViewModelを通して値の流し込みを行う
+    final communityViewModel = Provider.of<CommunityViewModel>(context);//ToDO: ここにViewModelを通して値の流し込みを行う
+
     return Scaffold(
       appBar: AppBar(title: const Text('コミュニティ')),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(onPressed: () {}, child: Text('機械学習')),
-              ElevatedButton(onPressed: () {}, child: Text('連合学習')),
-            ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                      onPressed: (){},
+                      icon: const Icon(
+                        Icons.add,
+                        size: 30,
+                        color: Colors.blue,
+                      )
+                  ),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(communityViewModel.items.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: communityViewModel.selected[index] ? Colors.green : null,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        ),
+
+                        // ボタンが押された時の処理
+                        onPressed: () => communityViewModel.toggleButton(index),
+
+                        // チェックを入れる
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (communityViewModel.selected[index]) ...[
+                              // const SizedBox(width: 8.0),
+                              const Icon(Icons.check),
+                            ],
+                            Text(communityViewModel.items[index]),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+
+                  //   ElevatedButton(onPressed: () {}, child: Text('連合学習')),
+                  // ],
+                ),
+              ],
+            ),
           ),
+
+          const Divider(),
           Expanded(
             child: ListView(
               children: const [
@@ -60,6 +135,7 @@ class _CommunityViewState extends State<CommunityView> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: communityViewModel.selectedIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'トーク'),
@@ -67,6 +143,11 @@ class _CommunityViewState extends State<CommunityView> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'プロフィール'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
         ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.black,
+        onTap: (int index) {
+          communityViewModel.navigateToHomeView(context);
+        },
       ),
     );
   }
