@@ -1,4 +1,9 @@
 class CommunityController < ApplicationController
+    # ユーザ一覧を表示
+    def index
+      @community = Community.all
+      render json: @community
+    end
     def create
         community = Community.new(community_params)
         if community.save

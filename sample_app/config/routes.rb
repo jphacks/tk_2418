@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   delete '/api/users/:id', to: 'users#destroy'            # Delete user by ID
 
   # Communities routes
+  get '/api/communities', to: 'communities#index'
   post '/api/communities', to: 'communities#create'                  # Create a new community
   get '/api/communities/:id', to: 'communities#show'                 # Get a community by ID
   post '/api/communities/:id/join', to: 'communities#join'           # Join a community
