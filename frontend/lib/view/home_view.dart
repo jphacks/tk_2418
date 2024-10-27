@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  int _currentIndex = 0;
+  // int _currentIndex = 0;
   final List<bool> _selected = List.generate(10, (index) => false);
   final List<String> _items = [
     "機械学習",
@@ -56,6 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void _navigateToCommunityView() {
     setState(() {
       _selectedIndex = 1;
+    });
+  }
+
+  void _navigateToPapersView() {
+    setState(() {
+      _selectedIndex = 2;
     });
   }
 
@@ -152,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ExpansionTile(
                   title: const Text("HOT"),
                   children: _items.map((item) {
-                    return HotTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
+                    return HotTopicWidget(title: item, views: 15, homeViewModel: homeViewModel, navigate: _navigateToPapersView);
                   }).toList(),
                 ),
               ),
@@ -241,8 +247,13 @@ class HotTopicWidget extends StatelessWidget {
   final String title;
   final int views;
   final HomeViewModel homeViewModel;
+  final VoidCallback navigate;
 
-  HotTopicWidget({required this.title, required this.views, required this.homeViewModel});
+  HotTopicWidget({
+    required this.title,
+    required this.views,
+    required this.homeViewModel,
+    required this.navigate});
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +261,7 @@ class HotTopicWidget extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
-        onTap: () => homeViewModel.navigateToCommunityView(context),
+        onTap: () => navigate(),
         child: Container(
           padding: EdgeInsets.all(16.0),
           margin: EdgeInsets.symmetric(vertical: 8.0),
