@@ -5,17 +5,21 @@ class UserRepository {
   final ApiService _apiService = ApiService();
 
   // APIからユーザーデータを取得するメソッド
-  Future<UserModel> getUserData(email) async {
-    return UserModel(id: "id", name: "name", affiliation: "affiliation", profileImageUrl: "profileImageUrl");
-    // return await _apiService.fetchUser(email); //ToDO: 実装
+  Future<UserModel> getUserData(id) async {
+    return UserModel(id: "id", name: "name", email: "email");
+    // return await _apiService.fetchUser(id); //ToDO: 実装
   }
 
   // ログイン処理
-  Future<bool> login(String username) async {
+  Future<bool> login(String id, String username, String email) async {
     if (username == "admin") {
       print("admin");
       return true;
     }
-    return await _apiService.loginUser(username);
+    return await _apiService.loginUser(id, username, email);
+  }
+
+  Future<bool> signUp(String id, String name, String email) async {
+    return await _apiService.signUpUser(id, name, email);
   }
 }
