@@ -12,10 +12,23 @@ class CommunityView extends StatefulWidget {
 class _CommunityViewState extends State<CommunityView> {
   final TextEditingController messageController = TextEditingController();
   int _selectedIndex = 0;
+  final List<bool> _selected = List.generate(10, (index) => false);
+  final List<String> _items = [
+    "機械学習",
+    "連合学習",
+    "LiDAR",
+    "P2P",
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  void _toggleButton(int index) {
+    setState(() {
+      _selected[index] = !_selected[index];
     });
   }
 
@@ -27,13 +40,44 @@ class _CommunityViewState extends State<CommunityView> {
       appBar: AppBar(title: const Text('コミュニティ')),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(onPressed: () {}, child: Text('機械学習')),
-              ElevatedButton(onPressed: () {}, child: Text('連合学習')),
-            ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(10, (index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    // ボタンが押された時の処理
+                    onPressed: () => _toggleButton(index),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _selected[index] ? Colors.green : null,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    ),
+
+                    // チェックを入れる
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (_selected[index]) ...[
+                          // const SizedBox(width: 8.0),
+                          const Icon(Icons.check),
+                        ],
+                        Text("Button $index"),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+
+              //   ElevatedButton(onPressed: () {}, child: Text('連合学習')),
+              // ],
+            ),
           ),
+
           Expanded(
             child: ListView(
               children: const [

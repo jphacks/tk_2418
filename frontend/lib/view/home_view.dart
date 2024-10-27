@@ -33,14 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     "P2P",
   ];
 
-  /*
-  @override
-  void initState(){
-    super.initState();
-      _selected = List.generate(_selectedLength, (index) => false);
-  }
-  */
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -85,9 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
 
-                          onPressed: () =>
                           // ボタンが押された時の処理
-                          // print('Button $index pressed'),
+                          onPressed: () =>
                           _toggleButton(index),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: _selected[index] ? Colors.green : null,
@@ -95,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            //minimumSize: Size(0, 40),
                           ),
 
                           // チェックを入れる
@@ -110,89 +100,36 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
 
-
                         ),
                       );
                     }),
-                    // ;
                   ),
-
                 ],
               ),
             ),
 
             const Divider(),
-            // トーク部分
-            // Padding(
-            //   padding: EdgeInsets.all(16.0),
-            //   child: Column(
-            //     // padding: EdgeInsets.all(16.0),
-            //     children: [
-            //       Row(children: [Text("トーク"),],),
-            //
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Text('機械学習'),
-            //           CircleAvatar(
-            //             radius: 15,
-            //             backgroundColor: Colors.red,
-            //             child: Text(
-            //               '15',
-            //               style: TextStyle(color: Colors.white),
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
-
-            // ListView(
-            //   children: [
-            Container(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: ExpansionTile(
-                  title: const Text("トーク"),
-                  children: _items.map((item) {
-                    // const CircleAvatar(
-                    //   radius: 15,
-                    //   backgroundColor: Colors.red,
-                    // );
-                    // return Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: HotTopicWidget(title: "title", views: 1500),
-                    // );
-                    return TalkTopicWidget(title: item, views: 15);
-                  }).toList(),
-                ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ExpansionTile(
+                title: const Text("トーク"),
+                children: _items.map((item) {
+                  return TalkTopicWidget(title: item, views: 15);
+                }).toList(),
               ),
             ),
             //   ],
             // ),
 
             // Hot Topics 部分
-            // Expanded(
-            //   child: ListView(
-            //     children: [
-            //       HotTopicWidget(title: 'A Distributed...', views: 1500),
-            //       HotTopicWidget(title: 'Byzantine...', views: 228),
-            //     ],
-            //   ),
-            // ),
-
             const Divider(),
-            Container(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: ExpansionTile(
-                  title: const Text("HOT"),
-                  children: _items.map((item) {
-                    return HotTopicWidget(title: item, views: 15);
-                  }).toList(),
-                ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: ExpansionTile(
+                title: const Text("HOT"),
+                children: _items.map((item) {
+                  return HotTopicWidget(title: item, views: 15);
+                }).toList(),
               ),
             ),
           ],
