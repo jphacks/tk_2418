@@ -11,10 +11,18 @@ class CommunityView extends StatefulWidget {
 }
 class _CommunityViewState extends State<CommunityView> {
   final TextEditingController messageController = TextEditingController();
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     // final communityViewModel = Provider.of<CommunityViewModel>(context);//ToDO: ここにViewModelを通して値の流し込みを行う
+
     return Scaffold(
       appBar: AppBar(title: const Text('コミュニティ')),
       body: Column(
@@ -60,6 +68,7 @@ class _CommunityViewState extends State<CommunityView> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'トーク'),
@@ -67,6 +76,9 @@ class _CommunityViewState extends State<CommunityView> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'プロフィール'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
         ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.black,
+        onTap: _onItemTapped,
       ),
     );
   }

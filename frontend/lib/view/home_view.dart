@@ -202,19 +202,12 @@ class _HomeScreenState extends State<HomeScreen> {
       // ボトムナビゲーションバー
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-          ),
-          BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
-          ),
-          BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-          ),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'トーク'),
+          BottomNavigationBarItem(icon: Icon(Icons.menu), label: '文献'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'プロフィール'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
         ],
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,
@@ -239,7 +232,11 @@ class TalkTopicWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
         onTap: () {
-          MaterialPageRoute(builder: (context) => const CommunityView());
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => CommunityView()),
+          );
+
         },
         child: Container(
           padding: EdgeInsets.all(16.0),
