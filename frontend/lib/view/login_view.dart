@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/view/home_view.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/auth_viewmodel.dart';
 import 'community_view.dart';
@@ -35,7 +36,8 @@ class AuthView extends StatelessWidget {
                     // ログインが成功したらCommunityViewに遷移
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => CommunityView()),
+                      // MaterialPageRoute(builder: (context) => CommunityView()),
+                      MaterialPageRoute(builder: (context) => const HomeScreen()),
                     );
                   } else {
                     // ログイン失敗時の処理
