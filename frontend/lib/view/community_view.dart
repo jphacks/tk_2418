@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart'; //ToDO: ここにViewModelを通して値の流し込みを行う
+import 'package:provider/provider.dart';
 
-// import '../viewmodels/talk_viewmodel.dart'; //ToDO: ここにViewModelを通して値の流し込みを行う
+import '../viewmodels/talk_viewmodel.dart';
 
 class CommunityView extends StatefulWidget {
-  const CommunityView({Key? key}) : super(key: key);
 
   @override
   _CommunityViewState createState() => _CommunityViewState();
 }
 class _CommunityViewState extends State<CommunityView> {
   final TextEditingController messageController = TextEditingController();
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -21,7 +20,7 @@ class _CommunityViewState extends State<CommunityView> {
 
   @override
   Widget build(BuildContext context) {
-    // final communityViewModel = Provider.of<CommunityViewModel>(context);//ToDO: ここにViewModelを通して値の流し込みを行う
+    final communityViewModel = Provider.of<CommunityViewModel>(context);//ToDO: ここにViewModelを通して値の流し込みを行う
 
     return Scaffold(
       appBar: AppBar(title: const Text('コミュニティ')),
@@ -78,7 +77,9 @@ class _CommunityViewState extends State<CommunityView> {
         ],
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
+        onTap: (int index) {
+          communityViewModel.navigateToHomeView(context);
+        },
       ),
     );
   }

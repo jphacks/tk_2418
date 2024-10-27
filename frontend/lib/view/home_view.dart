@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'community_view.dart';
+import 'package:frontend/viewmodels/home_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentNumber = 0;
   @override
   Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('ホーム'),
@@ -165,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     //   padding: const EdgeInsets.all(8.0),
                     //   child: HotTopicWidget(title: "title", views: 1500),
                     // );
-                    return TalkTopicWidget(title: item, views: 15);
+                    return TalkTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
                   }).toList(),
                 ),
               ),
@@ -190,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ExpansionTile(
                   title: const Text("HOT"),
                   children: _items.map((item) {
-                    return HotTopicWidget(title: item, views: 15);
+                    return HotTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
                   }).toList(),
                 ),
               ),
@@ -211,7 +212,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
+        onTap: (int index) {
+          _onItemTapped;
+          if (index == 1) {
+            homeViewModel.navigateToCommunityView(context);
+          }
+        },
       ),
     );
   }
@@ -221,9 +227,10 @@ class _HomeScreenState extends State<HomeScreen> {
 class TalkTopicWidget extends StatelessWidget {
   final String title;
   final int views;
+  final HomeViewModel homeViewModel;
   //
 
-  TalkTopicWidget({required this.title, required this.views});
+  TalkTopicWidget({required this.title, required this.views, required this.homeViewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -232,10 +239,7 @@ class TalkTopicWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
         onTap: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => CommunityView()),
-          );
+          homeViewModel.navigateToCommunityView(context);
 
         },
         child: Container(
@@ -269,8 +273,9 @@ class TalkTopicWidget extends StatelessWidget {
 class HotTopicWidget extends StatelessWidget {
   final String title;
   final int views;
+  final HomeViewModel homeViewModel;
 
-  HotTopicWidget({required this.title, required this.views});
+  HotTopicWidget({required this.title, required this.views, required this.homeViewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -278,9 +283,7 @@ class HotTopicWidget extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
-        onTap: () =>
-            MaterialPageRoute(builder: (context) => const CommunityView()),
-
+        onTap: () => homeViewModel.navigateToCommunityView(context),
         child: Container(
           padding: EdgeInsets.all(16.0),
           margin: EdgeInsets.symmetric(vertical: 8.0),

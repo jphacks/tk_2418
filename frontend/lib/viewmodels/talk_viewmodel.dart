@@ -29,4 +29,8 @@ class CommunityViewModel extends ChangeNotifier {
       print('Failed to send message: $e');
     }
   }
+
+  void navigateToHomeView(BuildContext context) {
+    Navigator.pushReplacementNamed(context, '/');
+  }
 }
