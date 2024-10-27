@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/view/community_view.dart';
 import 'package:frontend/viewmodels/home_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +25,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  // final int _selectedLength = 10;
+  int _currentIndex = 0;
   final List<bool> _selected = List.generate(10, (index) => false);
+  final PageController _pageController = PageController();
   final List<String> _items = [
     "機械学習",
     "連合学習",
@@ -42,105 +44,110 @@ class _HomeScreenState extends State<HomeScreen> {
   void _toggleButton(int index) {
     setState(() {
       _selected[index] = !_selected[index];
-
-      // if (_selected[index]) {
-      //   TalkTopicWidget(title: _items[index], views: 15);
-      //
-      // }
     });
   }
 
   int currentNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('ホーム'),
+        actions: [
+          IconButton(onPressed: () => {}, icon: const Icon(Icons.person)),
+        ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
 
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: IconButton(
-                        onPressed: (){},
-                        icon: const Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.blue,
-                        )
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: [
+          SingleChildScrollView(
+            child: Column(
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                          onPressed: (){},
+                          icon: const Icon(
+                            Icons.add,
+                            size: 30,
+                            color: Colors.blue,
+                          )
+                      ),
                     ),
-                  ),
 
-                  Row(
-                    children: List.generate(_items.length, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: _selected[index] ? Colors.green : null,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                    Row(
+                      children: List.generate(_items.length, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _selected[index] ? Colors.green : null,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          ),
 
-                          // ボタンが押された時の処理
-                          onPressed: () => _toggleButton(index),
+                            // ボタンが押された時の処理
+                            onPressed: () => _toggleButton(index),
 
-                          // チェックを入れる
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (_selected[index]) ...[
-                                // const SizedBox(width: 8.0),
-                                const Icon(Icons.check),
+                            // チェックを入れる
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (_selected[index]) ...[
+                                  // const SizedBox(width: 8.0),
+                                  const Icon(Icons.check),
+                                ],
+                                Text(_items[index]),
                               ],
-                              Text(_items[index]),
-                            ],
+                            ),
+
                           ),
-
-                        ),
-                      );
-                    }),
-                  ),
-                ],
+                        );
+                      }),
+                    ),
+                  ],
+                ),
               ),
-            ),
 
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ExpansionTile(
-                title: const Text("トーク"),
-                children: _items.map((item) {
-                  return TalkTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
-                }).toList(),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ExpansionTile(
+                  title: const Text("トーク"),
+                  children: _items.map((item) {
+                    return TalkTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
+                  }).toList(),
+                ),
               ),
-            ),
-            //   ],
-            // ),
+              //   ],
+              // ),
 
-            // Hot Topics 部分
-            const Divider(),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: ExpansionTile(
-                title: const Text("HOT"),
-                children: _items.map((item) {
-                  return HotTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
-                }).toList(),
+              // Hot Topics 部分
+              const Divider(),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: ExpansionTile(
+                  title: const Text("HOT"),
+                  children: _items.map((item) {
+                    return HotTopicWidget(title: item, views: 15, homeViewModel: homeViewModel);
+                  }).toList(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+          CommunityView(),
+      ]),
 
       // ボトムナビゲーションバー
       bottomNavigationBar: BottomNavigationBar(
@@ -149,7 +156,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'トーク'),
           BottomNavigationBarItem(icon: Icon(Icons.menu), label: '文献'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'プロフィール'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
         ],
         selectedItemColor: Colors.blue,

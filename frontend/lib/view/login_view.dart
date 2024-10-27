@@ -52,10 +52,11 @@ class AuthView extends StatelessWidget {
                       authViewModel.login(id, name, email);
                       print(authViewModel.isLoggedIn);
                       if (authViewModel.isLoggedIn) {
-                        // ログインが成功したらCommunityViewに遷移
+                        // ログインが成功したら(CommunityView)HomeViesに遷移
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => CommunityView()),
+                          //MaterialPageRoute(builder: (context) => CommunityView()),
+                          MaterialPageRoute(builder: (context) => const HomeScreen()),
                         );
                       } else {
                         // ログイン失敗時の処理

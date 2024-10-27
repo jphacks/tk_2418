@@ -36,7 +36,13 @@ class _CommunityViewState extends State<CommunityView> {
     final communityViewModel = Provider.of<CommunityViewModel>(context);//ToDO: ここにViewModelを通して値の流し込みを行う
 
     return Scaffold(
-      appBar: AppBar(title: const Text('コミュニティ')),
+      appBar: AppBar(
+        title: const Text('コミュニティ'),
+        actions: [
+          IconButton(onPressed: () => {}, icon: const Icon(Icons.person)),
+        ],
+      ),
+
       body: Column(
         children: [
           SingleChildScrollView(
@@ -87,9 +93,6 @@ class _CommunityViewState extends State<CommunityView> {
                       ),
                     );
                   }),
-
-                  //   ElevatedButton(onPressed: () {}, child: Text('連合学習')),
-                  // ],
                 ),
               ],
             ),
@@ -129,13 +132,13 @@ class _CommunityViewState extends State<CommunityView> {
           ),
         ],
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'トーク'),
           BottomNavigationBarItem(icon: Icon(Icons.menu), label: '文献'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'プロフィール'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
         ],
         selectedItemColor: Colors.blue,
