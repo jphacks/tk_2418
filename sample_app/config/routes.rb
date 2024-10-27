@@ -1,17 +1,23 @@
 Rails.application.routes.draw do
-  get 'users/index'
-  get 'users/show'
-  get 'users/create'
-  get 'users/update'
+  # Users routes
+  get '/api/users/index', to: 'users#index'
+  post '/api/users', to: 'users#create'
+  get '/api/users/:id', to: 'users#show'
+  put '/api/users/:id', to: 'users#update'
+  delete '/api/users/:id', to: 'users#destroy'
 
-  get 'community/create'
-  get 'community/show'
-  get 'community/join'
-  
-  get 'papers/index'
-  get 'papers/show'
-  get 'papers/recommend'
+  # Communities routes
+  post '/api/communities', to: 'communities#create'                  # Create a new community
+  get '/api/communities/:id', to: 'communities#show'                 # Get a community by ID
+  post '/api/communities/:id/join', to: 'communities#join'           # Join a community
 
-  get 'message/index'
-  get 'message/create'
+  # Messages routes
+  get '/api/communities/:community_id/messages', to: 'messages#index'   # Get all messages in a community
+  post '/api/communities/:community_id/messages', to: 'messages#create' # Create a new message in a community
+
+  # Papers routes
+  get '/api/papers', to: 'papers#index'
+  post '/api/papers', to: 'papers#create'
+  get '/api/papers/:id', to: 'papers#show'
+  get '/api/papers/recommend', to: 'papers#recommend'
 end
