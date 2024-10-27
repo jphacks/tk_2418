@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  // int _currentIndex = 0;
+  //int _currentIndex = 0;
   final List<bool> _selected = List.generate(10, (index) => false);
   final List<String> _items = [
     "機械学習",
