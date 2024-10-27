@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+ # skip_before_action :verify_authenticity_token, only: [:signup, :login]
  #rubyとruby on railsの書き方を間違えた
   # def initialize
  #   @users = {}
