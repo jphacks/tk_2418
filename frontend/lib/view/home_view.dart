@@ -253,11 +253,11 @@ class TalkTopicWidget extends StatelessWidget {
             children: [
               Text(title),
               CircleAvatar(
-                radius: 15,
+                radius: 12,
                 backgroundColor: Colors.red,
                 child: Text(
                   views.toString(),
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
                 ),
               ),
             ],
@@ -277,25 +277,34 @@ class HotTopicWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title),
-          Row(
+        onTap: () =>
+            MaterialPageRoute(builder: (context) => const CommunityView()),
+
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          margin: EdgeInsets.symmetric(vertical: 8.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.remove_red_eye),
-              SizedBox(width: 5),
-              Text('$views'),
+              Text(title),
+              Row(
+                children: [
+                  Icon(Icons.remove_red_eye),
+                  SizedBox(width: 5),
+                  Text('$views'),
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
