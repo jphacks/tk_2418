@@ -42,6 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void _toggleButton(int index) {
     setState(() {
       _selected[index] = !_selected[index];
+
+      // if (_selected[index]) {
+      //   TalkTopicWidget(title: _items[index], views: 15);
+      //
+      // }
     });
   }
 
@@ -58,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
+
               child: Row(
                 children: [
                   Padding(
@@ -73,14 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   Row(
-                    children: List.generate(10, (index) {
+                    children: List.generate(_items.length, (index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
-
-                          // ボタンが押された時の処理
-                          onPressed: () =>
-                          _toggleButton(index),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: _selected[index] ? Colors.green : null,
                             shape: RoundedRectangleBorder(
@@ -88,6 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           ),
+
+                          // ボタンが押された時の処理
+                          onPressed: () => _toggleButton(index),
 
                           // チェックを入れる
                           child: Row(
@@ -97,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // const SizedBox(width: 8.0),
                                 const Icon(Icons.check),
                               ],
-                              Text("Button $index"),
+                              Text(_items[index]),
                             ],
                           ),
 

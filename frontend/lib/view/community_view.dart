@@ -41,42 +41,61 @@ class _CommunityViewState extends State<CommunityView> {
         children: [
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(10, (index) {
-                return Padding(
+              children: [
+                Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    // ボタンが押された時の処理
-                    onPressed: () => _toggleButton(index),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _selected[index] ? Colors.green : null,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    ),
-
-                    // チェックを入れる
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (_selected[index]) ...[
-                          // const SizedBox(width: 8.0),
-                          const Icon(Icons.check),
-                        ],
-                        Text("Button $index"),
-                      ],
-                    ),
+                  child: IconButton(
+                      onPressed: (){},
+                      icon: const Icon(
+                        Icons.add,
+                        size: 30,
+                        color: Colors.blue,
+                      )
                   ),
-                );
-              }),
+                ),
 
-              //   ElevatedButton(onPressed: () {}, child: Text('連合学習')),
-              // ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(_items.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _selected[index] ? Colors.green : null,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        ),
+
+                        // ボタンが押された時の処理
+                        onPressed: () => _toggleButton(index),
+
+                        // チェックを入れる
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (_selected[index]) ...[
+                              // const SizedBox(width: 8.0),
+                              const Icon(Icons.check),
+                            ],
+                            Text(_items[index]),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+
+                  //   ElevatedButton(onPressed: () {}, child: Text('連合学習')),
+                  // ],
+                ),
+              ],
             ),
           ),
 
+          const Divider(),
           Expanded(
             child: ListView(
               children: const [
