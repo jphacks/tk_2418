@@ -36,12 +36,12 @@ class _CommunityViewState extends State<CommunityView> {
     final communityViewModel = Provider.of<CommunityViewModel>(context);//ToDO: ここにViewModelを通して値の流し込みを行う
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('コミュニティ'),
-        actions: [
-          IconButton(onPressed: () => {}, icon: const Icon(Icons.person)),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: const Text('コミュニティ'),
+      //   actions: [
+      //     IconButton(onPressed: () => {}, icon: const Icon(Icons.person)),
+      //   ],
+      // ),
 
       body: Column(
         children: [
@@ -133,20 +133,20 @@ class _CommunityViewState extends State<CommunityView> {
         ],
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'トーク'),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: '文献'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
-        ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.black,
-        onTap: (int index) {
-          communityViewModel.navigateToHomeView(context);
-        },
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: _selectedIndex,
+      //   items: const [
+      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'トーク'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.menu), label: '文献'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
+      //   ],
+      //   selectedItemColor: Colors.blue,
+      //   unselectedItemColor: Colors.black,
+      //   onTap: (int index) {
+      //     communityViewModel.navigateToHomeView(context);
+      //   },
+      // ),
     );
   }
 }

@@ -35,6 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
     "P2P",
   ];
 
+  List<String> titles = [
+    "ホーム",
+    "トーク",
+    "文献",
+    "設定"
+  ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -54,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final homeViewModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('ホーム'),
+        title: Text(titles[_selectedIndex]),
         actions: [
           IconButton(onPressed: () => {}, icon: const Icon(Icons.person)),
         ],
@@ -147,6 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
           CommunityView(),
+          const Center(child: Text("No Screen"),),
+          const Center(child: Text("No Screen"),),
       ]),
 
       // ボトムナビゲーションバー
@@ -161,10 +170,10 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,
         onTap: (int index) {
-          _onItemTapped;
-          if (index == 1) {
-            homeViewModel.navigateToCommunityView(context);
-          }
+          _onItemTapped(index);
+          // if (index == 1) {
+          //   homeViewModel.navigateToCommunityView(context);
+          // }
         },
       ),
     );
