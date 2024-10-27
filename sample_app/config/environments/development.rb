@@ -81,4 +81,5 @@ Rails.application.configure do
   config.hosts << pf_host
 
   config.action_cable.allowed_request_origins = ["https://#{pf_host}"]
+  config.web_console.permissions ="10.240.1.34"
 end
